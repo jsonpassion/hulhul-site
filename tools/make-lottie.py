@@ -119,18 +119,22 @@ def feather_shapes(scale=1.0):
 
 
 def hero_feather():
-    OP = 120
+    # 아이콘과 같은 모티프: 깃털이 살짝 들리며(-27° 부근) 흔들리고,
+    # tip(위-왼쪽) 너머로 세 점이 훌훌 날아올라 사라진다.
+    OP = 150
     feather = layer(
         "feather", feather_shapes(1.0), 1, OP,
-        pos=kfs([(0, [150, 148]), (60, [150, 134]), (120, [150, 148])]),
-        r=kfs([(0, -24), (60, -34), (120, -24)]))
-    dusts = []
-    for i, (x0, y0, delay, size) in enumerate([(96, 212, 0, 9), (120, 236, 36, 6), (76, 240, 70, 7)]):
-        dusts.append(layer(
-            f"dust{i}", [fill_group(ellipse(size, size), SOFT)], 2 + i, OP,
-            pos=kfs([(delay, [x0, y0]), (min(delay + 60, OP), [x0 - 34, y0 + 30])]),
-            o=kfs([(delay, 0), (delay + 12, 70), (min(delay + 60, OP), 0)])))
-    return doc("hero-feather", [feather] + dusts, OP)
+        pos=kfs([(0, [152, 158]), (75, [150, 142]), (150, [152, 158])]),
+        r=kfs([(0, -25), (75, -31), (150, -25)]))
+    parts = []
+    for i, (x, y, delay, size) in enumerate([(122, 96, 0, 11), (132, 106, 52, 8), (114, 112, 104, 9)]):
+        end = min(delay + 74, OP)
+        parts.append(layer(
+            f"rise{i}", [fill_group(ellipse(size, size), SOFT)], 2 + i, OP,
+            pos=kfs([(delay, [x, y]), (end, [x - 30, y - 50])]),   # 위-왼쪽으로 상승
+            o=kfs([(delay, 0), (delay + 14, 78), (end, 0)]),
+            s=kfs([(delay, [100, 100]), (end, [55, 55])])))
+    return doc("hero-feather", [feather] + parts, OP)
 
 
 def how_register():
