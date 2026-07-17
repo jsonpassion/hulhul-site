@@ -22,7 +22,8 @@ iOS 앱 **훌훌**의 랜딩 사이트입니다. 정적 HTML/CSS 한 벌로, 별
 | `index.html` | 랜딩 (히어로 · 사용법 4단계 · 기능 · 가격 · FAQ) |
 | `privacy.html` | 개인정보 처리방침 |
 | `terms.html` | 이용약관 |
-| `assets/video/hero-feather.mp4` | 히어로 시네마틱 루프 (+ `.jpg` 포스터) |
+| `assets/video/hero-feather.mp4` | 히어로 시네마틱 루프, 무음 (+ `.jpg` 포스터) |
+| `assets/video/hulhul-film.mp4` | 12초 광고 필름, 자막·VO 포함 — 클릭 재생 (+ `.jpg` 포스터) |
 | `assets/lottie/*.json` | 자체 제작 Lottie 애니메이션 6종 |
 | `tools/make-lottie.py` | Lottie 생성 스크립트 (아래 참고) |
 
