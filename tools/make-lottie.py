@@ -1,15 +1,16 @@
 #!/usr/bin/env python3
-"""훌훌 사이트 Lottie 생성기 — assets/lottie/*.json 재생성 (7종).
+"""훌훌 사이트 Lottie 생성기 — assets/lottie/*.json 재생성 (6종).
 실행: 리포 루트에서 `python3 tools/make-lottie.py`
 팔레트는 앱/아이콘과 동일: 산들바람 · 먹빛 · 아지랑이 · 솜구름.
 
-1. hero-feather    히어로: 떠오르며 흔들리는 깃털 + 흩어지는 먼지
-2. how-register    ① 얼굴 등록: 원형 슬롯에 얼굴이 담기고 1~3장으로 늘어남
-3. how-scan        ② 모두 찾기: 사진 그리드를 스캔 바가 훑고 매칭 셀이 켜짐
-4. how-review      ③ 직접 고르기: 체크가 그려지고, 아닌 사진은 빠짐
-5. how-sweep       ④ 훌훌 털기: 고른 사진들이 바람에 날아감
-6. feature-seal    봉인하기: 사진 위로 자물쇠가 내려와 잠김
-7. feature-privacy 온디바이스: 아이폰 안에서만 도는 얼굴 점
+1. how-register    ① 얼굴 등록: 원형 슬롯에 얼굴이 담기고 1~3장으로 늘어남
+2. how-scan        ② 모두 찾기: 사진 그리드를 스캔 바가 훑고 매칭 셀이 켜짐
+3. how-review      ③ 직접 고르기: 체크가 그려지고, 아닌 사진은 빠짐
+4. how-sweep       ④ 훌훌 털기: 고른 사진들이 바람에 날아감
+5. feature-seal    봉인하기: 사진 위로 자물쇠가 내려와 잠김
+6. feature-privacy 온디바이스: 아이폰 안에서만 도는 얼굴 점
+
+히어로는 시네마틱 영상(assets/video/hero-feather.mp4)이 대신한다.
 """
 import json
 import os
@@ -116,25 +117,6 @@ def feather_shapes(scale=1.0):
         stroke_group(path([[0, 56 * s], [0, 74 * s]]), BREEZE, 5 * s),
         fill_group(body, BREEZE),
     ]
-
-
-def hero_feather():
-    # 아이콘과 같은 모티프: 깃털이 살짝 들리며(-27° 부근) 흔들리고,
-    # tip(위-왼쪽) 너머로 세 점이 훌훌 날아올라 사라진다.
-    OP = 150
-    feather = layer(
-        "feather", feather_shapes(1.0), 1, OP,
-        pos=kfs([(0, [152, 158]), (75, [150, 142]), (150, [152, 158])]),
-        r=kfs([(0, -25), (75, -31), (150, -25)]))
-    parts = []
-    for i, (x, y, delay, size) in enumerate([(122, 96, 0, 11), (132, 106, 52, 8), (114, 112, 104, 9)]):
-        end = min(delay + 74, OP)
-        parts.append(layer(
-            f"rise{i}", [fill_group(ellipse(size, size), SOFT)], 2 + i, OP,
-            pos=kfs([(delay, [x, y]), (end, [x - 30, y - 50])]),   # 위-왼쪽으로 상승
-            o=kfs([(delay, 0), (delay + 14, 78), (end, 0)]),
-            s=kfs([(delay, [100, 100]), (end, [55, 55])])))
-    return doc("hero-feather", [feather] + parts, OP)
 
 
 def how_register():
@@ -267,7 +249,6 @@ def main():
     out_dir = os.path.normpath(os.path.join(os.path.dirname(__file__), "..", "assets", "lottie"))
     os.makedirs(out_dir, exist_ok=True)
     docs = {
-        "hero-feather": hero_feather(),
         "how-register": how_register(),
         "how-scan": how_scan(),
         "how-review": how_review(),
