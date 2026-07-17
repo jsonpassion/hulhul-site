@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""훌훌 사이트 Lottie 생성기 — assets/lottie/*.json 재생성 (6종).
+"""훌훌 사이트 Lottie 생성기 — assets/lottie/*.json 재생성 (10종).
 실행: 리포 루트에서 `python3 tools/make-lottie.py`
 팔레트는 앱/아이콘과 동일: 산들바람 · 먹빛 · 아지랑이 · 솜구름.
 
@@ -9,6 +9,10 @@
 4. how-sweep       ④ 훌훌 털기: 고른 사진들이 바람에 날아감
 5. feature-seal    봉인하기: 사진 위로 자물쇠가 내려와 잠김
 6. feature-privacy 온디바이스: 아이폰 안에서만 도는 얼굴 점
+7. feature-shared  함께 쓰는 사진 보호: 두 사람 앞에 방패가 서고 체크
+8. feature-multiface 여러 얼굴 선택: 셋 중 하나를 골라 체크
+9. feature-period  기간 선택: 칩이 골라지고 예상 시간이 도는 시계
+10. feature-live   실시간 발견: 진행 바가 차며 썸네일이 쌓임
 
 히어로는 시네마틱 영상(assets/video/hero-feather.mp4)이 대신한다.
 """
@@ -245,6 +249,97 @@ def feature_privacy():
     return doc("feature-privacy", [orbit, pulse, phone], OP)
 
 
+def feature_shared():
+    OP = 110
+    def person(x, tone):
+        return layer(f"p{x}", [stroke_group(ellipse(52, 52), tone, 3.5),
+                               fill_group(ellipse(13, 13, (0, -7)), tone),
+                               fill_group(ellipse(25, 16, (0, 11)), tone)], 4, OP,
+                     pos=[x, 108])
+    a, b = person(118, HAZE), person(182, HAZE)
+    b["ind"] = 5
+    # 방패: 아래에서 올라와 두 사람 앞에 선다
+    shield_shape = path([[0, -30], [26, -18], [26, 6], [0, 32], [-26, 6], [-26, -18]],
+                        closed=True,
+                        i_tan=[[0, 0], [-6, -4], [0, -6], [10, -4], [0, 8], [0, 0]],
+                        o_tan=[[6, -4], [0, 6], [0, 8], [-10, -4], [0, -6], [0, 0]])
+    shield = layer("shield", [fill_group(shield_shape, BREEZE)], 1, OP,
+                   pos=kfs([(12, [150, 235]), (32, [150, 178]), (38, [150, 172])]),
+                   o=kfs([(12, 0), (24, 100)]))
+    check = layer("check", [stroke_group(
+        path([[-11, 0], [-3, 8], [12, -8]]), WHITE, 6,
+        extras=[{"ty": "tm", "s": static(0), "e": kfs([(42, 0), (56, 100)]),
+                 "o": static(0), "m": 1}])], 0, OP,
+        pos=kfs([(12, [150, 232]), (32, [150, 175]), (38, [150, 169])]),
+        o=kfs([(42, 0), (44, 100)]))
+    check["ind"] = 6
+    return doc("feature-shared", [check, shield, a, b], OP)
+
+
+def feature_multiface():
+    OP = 120
+    slots = []
+    for i, x in enumerate([80, 150, 220]):
+        dim = kfs([(58, 100), (72, 45)]) if x != 150 else 100
+        slots.append(layer(f"s{i}", [stroke_group(ellipse(52, 52), HAZE, 3.5),
+                                     fill_group(ellipse(13, 13, (0, -7)), HAZE),
+                                     fill_group(ellipse(25, 16, (0, 11)), HAZE)],
+                           4 + i, OP, pos=[x, 130], o=dim))
+    # 선택 링: 훑다가 가운데에 멈춘다
+    ring = layer("ring", [stroke_group(ellipse(64, 64), BREEZE, 5)], 1, OP,
+                 pos=kfs([(8, [80, 130]), (26, [80, 130]), (40, [220, 130]),
+                          (54, [220, 130]), (66, [150, 130])]),
+                 o=kfs([(8, 0), (14, 100)]),
+                 s=kfs([(60, [100, 100]), (70, [108, 108]), (76, [100, 100])]))
+    check = layer("check", [stroke_group(
+        path([[-10, 0], [-3, 7], [11, -7]]), BREEZE, 6,
+        extras=[{"ty": "tm", "s": static(0), "e": kfs([(74, 0), (86, 100)]),
+                 "o": static(0), "m": 1}])], 2, OP,
+        pos=[150, 196], o=kfs([(74, 0), (76, 100)]))
+    return doc("feature-multiface", [check, ring] + slots, OP)
+
+
+def feature_period():
+    OP = 130
+    chips = []
+    # 칩 3개: 훑고 가운데(최근 1년)가 선택돼 남는다
+    for i, x in enumerate([83, 150, 217]):
+        if i == 1:
+            color = kfs([(30, LINE[:3] + [1]), (40, BREEZE[:3] + [1])])
+        else:
+            color = static(LINE)
+        chips.append(layer(f"chip{i}", [fill_group(rect(58, 28, 14), color)],
+                           3 + i, OP, pos=[x, 84]))
+    # 시계: 예상 시간
+    face = layer("clock", [stroke_group(ellipse(72, 72), BREEZE, 5)], 1, OP,
+                 pos=[150, 182],
+                 s=kfs([(44, [0, 0]), (58, [106, 106]), (66, [100, 100])]))
+    hand = layer("hand", [stroke_group(path([[0, 0], [0, -24]]), BREEZE, 5)], 2, OP,
+                 pos=[150, 182], r=kfs([(60, 0), (124, 360)]),
+                 o=kfs([(44, 0), (58, 100)]))
+    tick = layer("tick", [fill_group(ellipse(7, 7), BREEZE)], 0, OP,
+                 pos=[150, 182], o=kfs([(44, 0), (58, 100)]))
+    tick["ind"] = 6
+    return doc("feature-period", [tick, hand, face] + chips, OP)
+
+
+def feature_live():
+    OP = 120
+    track = layer("track", [fill_group(rect(200, 10, 5), LINE)], 3, OP, pos=[150, 74])
+    # 채워지는 바: 왼쪽 끝 고정으로 늘어난다
+    bar = layer("bar", [fill_group(rect(200, 10, 5), BREEZE)], 2, OP,
+                pos=[50, 74], a=[-100, 0],
+                s=kfs([(6, [0, 100]), (100, [96, 100])]))
+    thumbs = []
+    for i, (x, delay) in enumerate([(94, 26), (150, 52), (206, 78)]):
+        thumbs.append(layer(
+            f"t{i}", [fill_group(rect(50, 50, 9), SOFT if i == 1 else BREEZE)],
+            4 + i, OP, pos=[x, 166],
+            o=kfs([(delay, 0), (delay + 10, 100)]),
+            s=kfs([(delay, [40, 40]), (delay + 10, [108, 108]), (delay + 16, [100, 100])])))
+    return doc("feature-live", [bar, track] + thumbs, OP)
+
+
 def main():
     out_dir = os.path.normpath(os.path.join(os.path.dirname(__file__), "..", "assets", "lottie"))
     os.makedirs(out_dir, exist_ok=True)
@@ -255,6 +350,10 @@ def main():
         "how-sweep": how_sweep(),
         "feature-seal": feature_seal(),
         "feature-privacy": feature_privacy(),
+        "feature-shared": feature_shared(),
+        "feature-multiface": feature_multiface(),
+        "feature-period": feature_period(),
+        "feature-live": feature_live(),
     }
     for name, d in docs.items():
         p = os.path.join(out_dir, name + ".json")
