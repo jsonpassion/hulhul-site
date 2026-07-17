@@ -22,7 +22,8 @@ iOS 앱 **훌훌**의 랜딩 사이트입니다. 정적 HTML/CSS 한 벌로, 별
 | `index.html` | 랜딩 (히어로 · 사용법 4단계 · 기능 · 가격 · FAQ) |
 | `privacy.html` | 개인정보 처리방침 |
 | `terms.html` | 이용약관 |
-| `assets/lottie/*.json` | 자체 제작 Lottie 애니메이션 7종 |
+| `assets/video/hero-feather.mp4` | 히어로 시네마틱 루프 (+ `.jpg` 포스터) |
+| `assets/lottie/*.json` | 자체 제작 Lottie 애니메이션 6종 |
 | `tools/make-lottie.py` | Lottie 생성 스크립트 (아래 참고) |
 
 의존성은 애니메이션 재생용 [bodymovin(lottie-web)](https://github.com/airbnb/lottie-web) CDN 하나뿐입니다.
@@ -41,7 +42,9 @@ iOS 앱 **훌훌**의 랜딩 사이트입니다. 정적 HTML/CSS 한 벌로, 별
 python3 tools/make-lottie.py   # assets/lottie/*.json 재생성
 ```
 
-7종: `hero-feather`(히어로 깃털) · `how-register/scan/review/sweep`(사용법 4단계) · `feature-seal`(봉인) · `feature-privacy`(온디바이스).
+6종: `how-register/scan/review/sweep`(사용법 4단계) · `feature-seal`(봉인) · `feature-privacy`(온디바이스).
+히어로는 Lottie 대신 시네마틱 영상 루프(`assets/video/hero-feather.mp4`)가 맡습니다 — 무음·자동재생·루프,
+화면 밖에선 정지하고 `prefers-reduced-motion`에선 포스터만 보여줍니다.
 
 ## 로컬 미리보기
 
