@@ -108,6 +108,25 @@
   .reveal.from-right { transform: translateX(52px); }
   .reveal.in { opacity: 1; transform: none; }
 
+  /* ── 필름 섹션 (광고 영상, 클릭 재생) ── */
+  .film-wrap { margin-top: 40px; display: flex; justify-content: center; }
+  .film { position: relative; width: 100%; max-width: 356px; aspect-ratio: 9/16;
+          border-radius: 28px; overflow: hidden; box-shadow: var(--shadow-lg);
+          border: 1px solid rgba(255,255,255,.6); background: #0b1622; cursor: pointer; }
+  .film video { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .film .play { position: absolute; inset: 0; display: flex; flex-direction: column;
+                align-items: center; justify-content: center; gap: 12px;
+                background: linear-gradient(180deg, rgba(11,22,34,.10), rgba(11,22,34,.30));
+                transition: opacity .3s; border: 0; width: 100%; color: #fff; }
+  .film .play .disc { width: 74px; height: 74px; border-radius: 50%; background: rgba(255,255,255,.92);
+                      display: flex; align-items: center; justify-content: center;
+                      box-shadow: 0 12px 30px -8px rgba(0,0,0,.4); transition: transform .2s; }
+  .film:hover .play .disc { transform: scale(1.07); }
+  .film .play .disc svg { margin-left: 5px; }
+  .film .play .hint { font-size: 13px; font-weight: 700; letter-spacing: .02em;
+                      text-shadow: 0 1px 8px rgba(0,0,0,.5); }
+  .film.playing .play { opacity: 0; pointer-events: none; }
+
   /* ── 사용법 타임라인 (좌우 교차) ── */
   .steps { margin-top: 44px; display: flex; flex-direction: column; gap: 22px; }
   .step { display: flex; align-items: center; gap: 28px; background: var(--card); border: 1px solid var(--line);
@@ -234,6 +253,7 @@
       훌훌
     </a>
     <div class="nav-links">
+      <a href="#film">영상</a>
       <a href="#how">이렇게 써요</a>
       <a href="#features">기능</a>
       <a href="#pricing">가격</a>
@@ -259,6 +279,32 @@
     </div>
   </div>
 </header>
+
+<section id="film">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="kicker">Film</div>
+      <h2>12초면, 어떤 앱인지 알아요</h2>
+      <p>사진첩을 넘기다 마주친 그 얼굴부터, 훌훌 털어낸 뒤의 가벼움까지.</p>
+    </div>
+    <div class="film-wrap reveal">
+      <div class="film" id="filmBox">
+        <video id="filmVideo" playsinline preload="none"
+               poster="assets/video/hulhul-film.jpg">
+          <source src="assets/video/hulhul-film.mp4" type="video/mp4">
+        </video>
+        <button class="play" type="button" aria-label="훌훌 영상 재생 (12초, 소리 있음)">
+          <span class="disc" aria-hidden="true">
+            <svg width="26" height="30" viewBox="0 0 26 30" fill="none">
+              <path d="M2 2.5 L24 15 L2 27.5 Z" fill="#3D95C7"/>
+            </svg>
+          </span>
+          <span class="hint">12초 · 소리를 켜면 더 좋아요</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
 
 <section id="how">
   <div class="wrap">
@@ -437,6 +483,31 @@
     v.addEventListener("loadeddata", tryPlay, { once: true });
     v.addEventListener("canplay", tryPlay, { once: true });
   });
+
+  // 필름 — 놀라지 않게 자동재생 안 함. 누르면 소리와 함께 재생.
+  (function () {
+    var box = document.getElementById("filmBox"), v = document.getElementById("filmVideo");
+    if (!box || !v) return;
+    box.addEventListener("click", function () {
+      if (v.paused) {
+        v.muted = false;
+        v.controls = true;
+        box.classList.add("playing");
+        var p = v.play(); if (p) p.catch(function () {});
+      }
+    });
+    v.addEventListener("ended", function () {
+      box.classList.remove("playing");
+      v.controls = false;
+      v.currentTime = 0;
+    });
+    // 화면 밖으로 나가면 멈춰서 소리가 따라다니지 않게
+    new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting && !v.paused) { v.pause(); }
+      });
+    }, { threshold: 0.25 }).observe(box);
+  })();
 
   // 스크롤 리빌 — 뷰포트에 들어오면 한쪽에서 펼쳐지듯 나타남
   if (reduce) {
