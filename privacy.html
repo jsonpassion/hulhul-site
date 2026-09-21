@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>훌훌 — 개인정보처리방침</title>
+<title>훌훌 개인정보 처리방침</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect x='3' y='3' width='94' height='94' rx='22' fill='%233D95C7'/%3E%3Cg transform='translate(50,53) rotate(-27)'%3E%3Cpath d='M0 -30Q11 0 0 30Q-11 0 0 -30Z' fill='%23fff'/%3E%3Cline x1='0' y1='-25' x2='0' y2='27' stroke='%23AFD4EC' stroke-width='2' stroke-linecap='round'/%3E%3Cline x1='0' y1='30' x2='0' y2='38' stroke='%23fff' stroke-width='2.4' stroke-linecap='round'/%3E%3C/g%3E%3Ccircle cx='34' cy='21' r='4' fill='%23fff'/%3E%3Ccircle cx='31' cy='15.5' r='2.7' fill='%23fff'/%3E%3Ccircle cx='28.5' cy='11' r='1.7' fill='%23fff'/%3E%3C/svg%3E">
 <style>
   :root { --cloud:#F7FAFC; --ink:#22303B; --haze:#7C8B96; --breeze:#3D95C7; }
@@ -24,39 +24,44 @@
 <body>
 <main>
   <a class="back" href="index.html">← 훌훌</a>
-  <h1>개인정보처리방침</h1>
-  <p class="date">시행일: 2026년 7월 14일</p>
+  <h1>개인정보 처리방침</h1>
+  <p class="date">시행일: 2026년 9월 21일</p>
 
-  <p>'훌훌'(이하 "앱")는 ForgeLab(대표 Jason Lee)이 제공합니다. 요약하면 이렇습니다:
-  <strong>앱은 어떤 개인정보도 수집하지 않습니다.</strong></p>
+  <p>'훌훌'(이하 "앱")은 ForgeLab(대표 Jason Lee)이 제공합니다. 요약하면 이렇습니다.
+  <strong>앱은 어떤 개인정보도 수집하지 않습니다.</strong> English: <a href="en/privacy.html">Privacy Policy</a></p>
 
   <h2>1. 수집하는 정보</h2>
-  <p>없습니다. 앱에는 서버가 없고, 계정도 없으며, 분석(analytics) 도구도 넣지 않았습니다.
-  이름, 이메일, 위치, 광고 식별자 등 어떤 정보도 수집·전송하지 않습니다.</p>
+  <p>없습니다. 앱에는 서버도 계정도 없고, 분석(analytics) 도구도 넣지 않았습니다.
+  이름, 이메일, 위치, 광고 식별자 같은 어떤 정보도 수집하거나 전송하지 않습니다.</p>
 
   <h2>2. 사진과 얼굴 데이터</h2>
   <ul>
-    <li>앱은 사용자가 허용한 범위에서 사진 보관함에 접근합니다. 접근 목적은 특정 인물이 담긴 사진을 찾는 것 하나입니다.</li>
-    <li>얼굴 인식(매칭)은 <strong>전부 기기 위에서</strong> Apple Vision과 온디바이스 머신러닝 모델로 처리됩니다. 사진도, 얼굴 데이터도 기기 밖으로 나가지 않습니다.</li>
-    <li>스캔 속도를 위해 계산된 얼굴 특징값(숫자 벡터)을 기기 내부 저장소에만 캐시합니다. 이 캐시는 앱을 삭제하면 함께 삭제됩니다.</li>
-    <li>사진 삭제는 항상 iOS 시스템 확인 창을 거치며, 삭제된 사진은 사진 앱 '최근 삭제'에 30일간 보관됩니다.</li>
+    <li>앱은 사용자가 허용한 범위에서 사진 보관함에 접근합니다. 목적은 사용자가 고른 사람이 담긴 사진을 찾는 것 하나입니다.</li>
+    <li>얼굴 인식(매칭)은 <strong>전부 기기 안에서</strong> Apple Vision과 기기에 들어 있는 머신러닝 모델로 처리합니다. 사진도 얼굴 데이터도 기기 밖으로 나가지 않습니다.</li>
+    <li>다시 찾을 때 빠르도록, 계산한 얼굴 특징값(숫자 벡터)과 마지막으로 찾은 사람의 대표 특징값 하나를 기기 안에만 저장합니다. 앱의 설정에서 '분석 기록 지우기'로 언제든 지울 수 있고, 앱을 삭제하면 함께 지워집니다.</li>
+    <li>정리한 사진은 iOS 확인 창을 거쳐 사진 앱의 '최근 삭제된 항목'으로 옮겨지고 30일 동안 보관됩니다. 봉인한 사진은 사진 앱의 '가려진 항목'으로 옮겨집니다.</li>
   </ul>
 
-  <h2>3. 결제</h2>
-  <p>'훌훌 Pro'는 Apple App Store 인앱 결제로 처리됩니다. 결제 정보는 Apple이 처리하며,
+  <h2>3. 기기 안에만 저장하는 설정 값</h2>
+  <p>무료로 정리한 사진 장수(숫자 하나), 구매 여부, 앱 언어 같은 설정 값을 기기 안에 저장합니다.
+  무료 정리 장수는 기기의 키체인에도 적어 두어 앱을 지웠다 다시 설치해도 남을 수 있습니다.
+  이 값들은 기기 밖으로 전송되지 않습니다.</p>
+
+  <h2>4. 결제</h2>
+  <p>'훌훌 Pro'는 Apple App Store 인앱 결제로 처리합니다. 결제 정보는 Apple이 처리하며,
   앱은 결제 수단 정보에 접근할 수 없습니다. 환불은 Apple 정책을 따릅니다.</p>
 
-  <h2>4. 제3자 제공</h2>
-  <p>수집하는 정보가 없으므로 제공할 정보도 없습니다.</p>
+  <h2>5. 제3자 제공</h2>
+  <p>수집하는 정보가 없으므로 제공하는 정보도 없습니다.</p>
 
-  <h2>5. 아동의 개인정보</h2>
+  <h2>6. 아동의 개인정보</h2>
   <p>앱은 어떤 이용자의 개인정보도 수집하지 않으며, 아동의 정보도 마찬가지입니다.</p>
 
-  <h2>6. 방침의 변경</h2>
-  <p>방침이 바뀌면 이 페이지에서 고지합니다. 중요한 변경이 있으면 앱 업데이트 노트에도 표기합니다.</p>
+  <h2>7. 방침의 변경</h2>
+  <p>방침이 바뀌면 이 페이지에서 알립니다. 중요한 변경은 앱 업데이트 설명에도 적습니다.</p>
 
-  <h2>7. 문의</h2>
-  <p>궁금한 점은 아래 버튼으로 보내주세요. 확인하는 대로 답변드릴게요.</p>
+  <h2>8. 문의</h2>
+  <p>궁금한 점은 아래 버튼으로 보내 주세요. 확인하는 대로 답변드릴게요.</p>
   <p style="margin-top:12px;"><a href="mailto:forgelab.aitech@gmail.com?subject=%5B%ED%9B%8C%ED%9B%8C%5D%20%EB%AC%B8%EC%9D%98" style="background:var(--breeze); color:#fff; padding:10px 18px; border-radius:10px; font-weight:600; text-decoration:none;">✉️ 문의하기</a></p>
 
   <footer style="margin-top:56px; padding-top:28px; border-top:1px solid #E3EBF1;
@@ -66,7 +71,7 @@
     <a href="mailto:forgelab.aitech@gmail.com?subject=%5B%ED%9B%8C%ED%9B%8C%5D%20%EB%AC%B8%EC%9D%98" style="background:var(--breeze); color:#fff; padding:8px 16px;
        border-radius:10px; font-weight:600; text-decoration:none;">✉️ 문의하기</a>
     <span style="margin-left:auto;">© 2026 ForgeLab</span>
-    <span style="width:100%; font-size:13px;">ForgeLab · 대표 Jason Lee</span>
+    <span style="width:100%; font-size:13px;">ForgeLab 대표 Jason Lee</span>
   </footer>
 </main>
 </body>
